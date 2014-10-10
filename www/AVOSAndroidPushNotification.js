@@ -21,13 +21,4 @@ AVOSAndroidPushNotification.prototype.get_installation_id = function(successCall
 
 //-------------------------------------------------------------------
 
-if(!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.AVOSAndroidPushNotification) {
-    window.plugins.AVOSAndroidPushNotification = new AVOSAndroidPushNotification();
-}
-
-if (typeof module != 'undefined' && module.exports) {
-  module.exports = AVOSAndroidPushNotification;
-}
+module.exports = new AVOSAndroidPushNotification();
