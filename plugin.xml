@@ -47,7 +47,7 @@
 		<source-file src="src/android/libs/avospush-v2.6.5.jar" target-dir="libs/" />
 		<source-file src="src/android/libs/fastjson.jar" target-dir="libs/" />
 		<source-file src="src/android/libs/httpmime-4.2.4.jar" target-dir="libs/" />
-		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushPlugin.java" target-dir="src/com/plugin/" />
+		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushPlugin.java" target-dir="src/com/mobishift/plugin/" />
 
 	</platform>
 
