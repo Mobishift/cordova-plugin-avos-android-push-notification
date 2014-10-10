@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.mobishift.plugins.AVOSAndroidPushNotification" version="0.0.1">
+
+  <name>AVOSAndroidPushNotification</name>
+	<author>Deckmon Yang</author>
+
+	<description>
+		AVOS Android Push Notifation
+	</description>
+
+	<license>MIT</license>
+
+	<js-module src="www/AVOSAndroidPushNotification.js" name="AVOSAndroidPushNotification">
+        <clobbers target="AVOSAndroidPushNotification" />
+	</js-module>
+
+	<engines>
+		<engine name="cordova" version=">=3.0.0" />
+	</engines>
+
+	<!-- android -->
+	<platform name="android">
+
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="AVOSAndroidPushPlugin" >
+				<param name="android-package" value="com.mobishift.plugin.AVOSAndroidPushPlugin"/>
+			</feature>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+		    <service android:name="com.avos.avoscloud.PushService"/>
+		    <uses-permission android:name="android.permission.INTERNET"/>
+		    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+                <intent-filter>
+                    <action android:name="android.intent.action.BOOT_COMPLETED" />
+                    <action android:name="android.intent.action.USER_PRESENT" />
+                </intent-filter>
+            </receiver>
+		</config-file>
+
+		<source-file src="src/android/libs/android-async-http-1.4.4-fix.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/avoscloud-v2.6.5.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/avospush-v2.6.5.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/fastjson.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/httpmime-4.2.4.jar" target-dir="libs/" />
+		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushPlugin.java" target-dir="src/com/plugin/" />
+
+	</platform>
+
+</plugin>
