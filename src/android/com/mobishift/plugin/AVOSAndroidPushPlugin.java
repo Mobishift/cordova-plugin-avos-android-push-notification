@@ -1,7 +1,7 @@
 package com.mobishift.plugin;
 
-import org.apache.cordova.*;
-import com.avos.avoscloud.*;
+import org.apache.cordova.CordovaPlugin;
+import com.avos.avoscloud.AVInstallation;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,16 +11,16 @@ import org.json.JSONObject;
  */
 
 public class PushInstallationPlugin extends CordovaPlugin {
-	public static final String TAG = "PushInstallationPlugin";
+    public static final String TAG = "PushInstallationPlugin";
 
-	@Override
-	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
-		if (action.equals("get_installation_id") {
-			callbackContext.success(AVInstallation.getCurrentInstallation().getInstallationId());
-		} else {
-			return false;
-		}
+    @Override
+    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
+        if (action.equals("get_installation_id")) {
+            callbackContext.success(AVInstallation.getCurrentInstallation().getInstallationId());
+        } else {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }
