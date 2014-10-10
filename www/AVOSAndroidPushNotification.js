@@ -1,9 +1,11 @@
+var exec = require('cordova/exec');
+
 var AVOSAndroidPushNotification = function() {
 };
 
 
 // Call this to register for push notifications. Content of [options] depends on whether we are working with APNS (iOS) or GCM (Android)
-AVOSAndroidPushNotification.prototype.get_installation_id = function(successCallback, errorCallback, options) {
+AVOSAndroidPushNotification.prototype.get_installation_id = function(successCallback, errorCallback) {
     if (errorCallback == null) { errorCallback = function() {}}
 
     if (typeof errorCallback != "function")  {
@@ -16,7 +18,7 @@ AVOSAndroidPushNotification.prototype.get_installation_id = function(successCall
         return
     }
 
-    cordova.exec(successCallback, errorCallback, "AVOSAndroidPushPlugin", "get_installation_id", [options]);
+    exec(successCallback, errorCallback, "AVOSAndroidPushPlugin", "get_installation_id", []);
 };
 
 //-------------------------------------------------------------------
