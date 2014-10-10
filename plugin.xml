@@ -28,7 +28,6 @@
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest">
-		    <service android:name="com.avos.avoscloud.PushService"/>
 		    <uses-permission android:name="android.permission.INTERNET"/>
 		    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 		</config-file>
@@ -40,6 +39,7 @@
                     <action android:name="android.intent.action.USER_PRESENT" />
                 </intent-filter>
             </receiver>
+            <service android:name="com.avos.avoscloud.PushService"/>
 		</config-file>
 
 		<source-file src="src/android/libs/android-async-http-1.4.4-fix.jar" target-dir="libs/" />
