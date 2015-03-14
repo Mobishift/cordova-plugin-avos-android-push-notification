@@ -42,11 +42,12 @@
             <service android:name="com.avos.avoscloud.PushService"/>
 		</config-file>
 
-		<source-file src="src/android/libs/android-async-http-1.4.4-fix.jar" target-dir="libs/" />
-		<source-file src="src/android/libs/avoscloud-v2.6.5.jar" target-dir="libs/" />
-		<source-file src="src/android/libs/avospush-v2.6.5.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/android-async-http-1.4.6.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/avoscloud-push-v2.7.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/avoscloud-sdk-v2.7.jar" target-dir="libs/" />
 		<source-file src="src/android/libs/fastjson.jar" target-dir="libs/" />
 		<source-file src="src/android/libs/httpmime-4.2.4.jar" target-dir="libs/" />
+		<source-file src="src/android/libs/Java-WebSocket-1.2.0-leancloud.jar" target-dir="libs/" />
 		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushPlugin.java" target-dir="src/com/mobishift/plugin/" />
 
 	</platform>
