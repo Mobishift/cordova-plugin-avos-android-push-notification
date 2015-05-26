@@ -21,6 +21,15 @@ AVOSAndroidPushNotification.prototype.get_installation_id = function(successCall
     exec(successCallback, errorCallback, "AVOSAndroidPushPlugin", "get_installation_id", []);
 };
 
+AVOSAndroidPushNotification.prototype.on_notification = function(callback){
+    callback = callback || function(){};
+    if(typeof callback !== 'function'){
+        console.log('AVOSAndroidPushNotification.on_notification failure: callback parameter must be a function');
+    }
+    
+    exec(callback, function(){}, "AVOSAndroidPushPlugin", 'on_notification', []);
+}
+
 //-------------------------------------------------------------------
 
 module.exports = new AVOSAndroidPushNotification();

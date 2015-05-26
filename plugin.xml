@@ -33,10 +33,13 @@
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+            <receiver android:name="com.mobishift.plugin.AVOSAndroidPushReceiver">
                 <intent-filter>
                     <action android:name="android.intent.action.BOOT_COMPLETED" />
                     <action android:name="android.intent.action.USER_PRESENT" />
+                    <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                    <action android:name="com.avos.UPDATE_STATUS" />
+        			<action android:name="com.mobishift.plugin.Push" />
                 </intent-filter>
             </receiver>
             <service android:name="com.avos.avoscloud.PushService"/>
@@ -49,7 +52,7 @@
 		<source-file src="src/android/libs/httpmime-4.2.4.jar" target-dir="libs/" />
 		<source-file src="src/android/libs/Java-WebSocket-1.2.0-leancloud.jar" target-dir="libs/" />
 		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushPlugin.java" target-dir="src/com/mobishift/plugin/" />
-
+		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushReceiver.java" target-dir="src/com/mobishift/plugin/" />
 	</platform>
 
 </plugin>
