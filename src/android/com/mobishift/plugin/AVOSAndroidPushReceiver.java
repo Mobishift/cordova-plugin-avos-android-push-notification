@@ -29,6 +29,10 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
         if(action.equals(PUSH_ACTION)) {
             try{
                 JSONObject json = new JSONObject(intent.getExtras().getString("com.avos.avoscloud.Data"));
+                String clientType = json.getString("client_type");
+                if(!clientType.equals(AVOSAndroidPushPlugin.ClientType)){
+                    return;
+                }
                 final String message = json.getString("alert");
                 Class<?> c = null;
                 String packageName = AVOSCloud.applicationContext.getPackageName();
