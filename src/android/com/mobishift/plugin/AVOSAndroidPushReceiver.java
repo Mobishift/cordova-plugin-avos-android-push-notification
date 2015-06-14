@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 public class AVOSAndroidPushReceiver extends BroadcastReceiver {
     private static final String PUSH_ACTION = "com.mobishift.plugin.Push";
     private static final String TAG = "AVOSAndroidPushReceiver";
+    private Ringtone ringtone;
     private static final int ID = 10024;
 
     @Override
@@ -44,9 +47,10 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
                         .setContentTitle(context.getString(AVOSCloud.applicationContext.getApplicationInfo().labelRes))
                         .setContentText(message)
                         .setTicker(message);
-                builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+                builder.setDefaults(0);
                 builder.setContentIntent(pendingIntent);
-
+                initSound();
+                ringtone.play();
                 NotificationManager manager = (NotificationManager) AVOSCloud.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify(ID, builder.build());
             }catch (JSONException ex){
@@ -60,5 +64,15 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
 
         }
 
+    }
+
+    private void initSound(){
+        if(ringtone == null){
+            ringtone = RingtoneManager.getRingtone(AVOSCloud.applicationContext,
+                    RingtoneManager.getActualDefaultRingtoneUri(AVOSCloud.applicationContext, RingtoneManager.TYPE_NOTIFICATION));
+        }
+        if(ringtone.isPlaying()){
+            ringtone.stop();
+        }
     }
 }
