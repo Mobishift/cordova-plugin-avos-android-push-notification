@@ -47,7 +47,7 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
                         .setContentTitle(context.getString(AVOSCloud.applicationContext.getApplicationInfo().labelRes))
                         .setContentText(message)
                         .setTicker(message);
-                builder.setDefaults(0);
+                builder.setDefaults(0 | Notification.DEFAULT_VIBRATE);
                 builder.setContentIntent(pendingIntent);
                 initSound();
                 ringtone.play();
