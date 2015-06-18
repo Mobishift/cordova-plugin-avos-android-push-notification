@@ -1,16 +1,14 @@
 package com.mobishift.plugin;
 
-import android.widget.Toast;
+import android.app.Activity;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.PushService;
 
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * @author deckmon
  */
@@ -28,6 +26,14 @@ public class AVOSAndroidPushPlugin extends CordovaPlugin {
         boolean result = false;
         getClientType();
         if (action.equals("get_installation_id")) {
+            Class<Activity> c = null;
+            String packageName = this.cordova.getActivity().getApplication().getPackageName();
+            try {
+                c = (Class<Activity>)Class.forName(packageName + ".MainActivity");
+            }catch (ClassNotFoundException ex){
+
+            }
+            PushService.setDefaultPushCallback(this.cordova.getActivity(), c);
             result = true;
             callbackContext.success(AVInstallation.getCurrentInstallation().getInstallationId());
         } else if(action.equals("on_notification")){
