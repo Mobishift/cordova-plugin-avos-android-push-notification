@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -49,7 +50,16 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
                         .setTicker(message);
                 builder.setDefaults(0 | Notification.DEFAULT_VIBRATE);
                 builder.setContentIntent(pendingIntent);
-                initSound();
+                String sound = json.getString("sound");
+                Uri uri = null;
+                if(sound != null && sound != "default"){
+                    sound = sound.split("\\.")[0];
+                    int soundId = AVOSCloud.applicationContext.getResources().getIdentifier(sound, "raw", AVOSCloud.applicationContext.getPackageName());
+                    uri = Uri.parse("android.resource://" + AVOSCloud.applicationContext.getPackageName() + "/" + soundId);
+                }else{
+                    uri = RingtoneManager.getActualDefaultRingtoneUri(AVOSCloud.applicationContext, RingtoneManager.TYPE_NOTIFICATION);
+                }
+                initSound(uri);
                 ringtone.play();
                 NotificationManager manager = (NotificationManager) AVOSCloud.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify(ID, builder.build());
@@ -66,13 +76,10 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
 
     }
 
-    private void initSound(){
-        if(ringtone == null){
-            ringtone = RingtoneManager.getRingtone(AVOSCloud.applicationContext,
-                    RingtoneManager.getActualDefaultRingtoneUri(AVOSCloud.applicationContext, RingtoneManager.TYPE_NOTIFICATION));
-        }
-        if(ringtone.isPlaying()){
+    private void initSound(Uri sound){
+        if(ringtone != null && ringtone.isPlaying()){
             ringtone.stop();
         }
+        ringtone = RingtoneManager.getRingtone(AVOSCloud.applicationContext, sound);
     }
 }
