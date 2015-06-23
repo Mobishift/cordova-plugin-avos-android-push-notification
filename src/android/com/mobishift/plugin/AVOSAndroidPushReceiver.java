@@ -52,7 +52,7 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
                 builder.setContentIntent(pendingIntent);
                 String sound = json.getString("sound");
                 Uri uri = null;
-                if(sound != null && sound != "default"){
+                if(sound != null && !sound.equals("default")){
                     sound = sound.split("\\.")[0];
                     int soundId = AVOSCloud.applicationContext.getResources().getIdentifier(sound, "raw", AVOSCloud.applicationContext.getPackageName());
                     uri = Uri.parse("android.resource://" + AVOSCloud.applicationContext.getPackageName() + "/" + soundId);
