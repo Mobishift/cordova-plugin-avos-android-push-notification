@@ -55,7 +55,11 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
                 if(sound != null && !sound.equals("default")){
                     sound = sound.split("\\.")[0];
                     int soundId = AVOSCloud.applicationContext.getResources().getIdentifier(sound, "raw", AVOSCloud.applicationContext.getPackageName());
-                    uri = Uri.parse("android.resource://" + AVOSCloud.applicationContext.getPackageName() + "/" + soundId);
+                    if(soundId > 0){
+                        uri = Uri.parse("android.resource://" + AVOSCloud.applicationContext.getPackageName() + "/" + soundId);
+                    }else{
+                        uri = RingtoneManager.getActualDefaultRingtoneUri(AVOSCloud.applicationContext, RingtoneManager.TYPE_NOTIFICATION);
+                    }
                 }else{
                     uri = RingtoneManager.getActualDefaultRingtoneUri(AVOSCloud.applicationContext, RingtoneManager.TYPE_NOTIFICATION);
                 }
