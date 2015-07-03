@@ -51,7 +51,6 @@
 		<lib-file src="src/android/libs/fastjson.jar" />
 		<lib-file src="src/android/libs/httpmime-4.2.4.jar" />
 		<lib-file src="src/android/libs/Java-WebSocket-1.2.0-leancloud.jar" />
-        <lib-file src="src/android/libs/android-support-v4.jar" />
 		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushPlugin.java" target-dir="src/com/mobishift/plugin/" />
 		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushReceiver.java" target-dir="src/com/mobishift/plugin/" />
 	</platform>
