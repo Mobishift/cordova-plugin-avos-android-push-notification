@@ -48,7 +48,8 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
                         .setContentTitle(context.getString(AVOSCloud.applicationContext.getApplicationInfo().labelRes))
                         .setContentText(message)
                         .setTicker(message);
-                builder.setDefaults(0 | Notification.DEFAULT_VIBRATE);
+                builder.setDefaults(android.app.Notification.DEFAULT_LIGHTS | android.app.Notification.DEFAULT_VIBRATE);
+                builder.setAutoCancel(true);
                 builder.setContentIntent(pendingIntent);
                 String sound = json.getString("sound");
                 Uri uri = null;
