@@ -1,51 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <plugin id="com.mobishift.plugins.AVOSAndroidPushNotification" version="0.0.1">
-
-  <name>AVOSAndroidPushNotification</name>
+	<name>AVOSAndroidPushNotification</name>
 	<author>Deckmon Yang</author>
-
-	<description>
-		AVOS Android Push Notifation
-	</description>
-
+	<description>AVOS Android Push Notifation</description>
 	<license>MIT</license>
-
-	<js-module src="www/AVOSAndroidPushNotification.js" name="AVOSAndroidPushNotification">
-        <clobbers target="AVOSAndroidPushNotification" />
-	</js-module>
-
+	
 	<engines>
 		<engine name="cordova" version=">=3.0.0" />
 	</engines>
-
-	<!-- android -->
 	<platform name="android">
-		<hook type="before_plugin_install" src="scripts/android_before_install.js" />
-		<hook type="before_plugin_uninstall" src="scripts/android_before_uninstall.js" />
-		<config-file target="res/xml/config.xml" parent="/*">
-			<feature name="AVOSAndroidPushPlugin" >
-				<param name="android-package" value="com.mobishift.plugin.AVOSAndroidPushPlugin"/>
+		<js-module name="AVOSAndroidPushNotification" src="www/android/AVOSAndroidPushNotification.js">
+			<clobbers target="AVOSAndroidPushNotification" />
+		</js-module>
+		<hook src="scripts/android_before_install.js" type="before_plugin_install" />
+		<hook src="scripts/android_before_uninstall.js" type="before_plugin_uninstall" />
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="AVOSAndroidPushPlugin">
+				<param name="android-package" value="com.mobishift.plugin.AVOSAndroidPushPlugin" />
 			</feature>
 		</config-file>
-
-		<config-file target="AndroidManifest.xml" parent="/manifest">
-		    <uses-permission android:name="android.permission.INTERNET"/>
-		    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 		</config-file>
-
-		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <receiver android:name="com.mobishift.plugin.AVOSAndroidPushReceiver">
-                <intent-filter>
-                    <action android:name="android.intent.action.BOOT_COMPLETED" />
-                    <action android:name="android.intent.action.USER_PRESENT" />
-                    <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                    <action android:name="com.avos.UPDATE_STATUS" />
-        			<action android:name="com.mobishift.plugin.Push" />
-                </intent-filter>
-            </receiver>
-            <service android:name="com.avos.avoscloud.PushService"/>
+		<config-file parent="/manifest/application" target="AndroidManifest.xml">
+			<receiver android:name="com.mobishift.plugin.AVOSAndroidPushReceiver">
+				<intent-filter>
+					<action android:name="android.intent.action.BOOT_COMPLETED" />
+					<action android:name="android.intent.action.USER_PRESENT" />
+					<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+					<action android:name="com.avos.UPDATE_STATUS" />
+					<action android:name="com.mobishift.plugin.Push" />
+				</intent-filter>
+			</receiver>
+			<service android:name="com.avos.avoscloud.PushService" />
 		</config-file>
-
 		<lib-file src="src/android/libs/android-async-http-1.4.6.jar" />
 		<lib-file src="src/android/libs/avoscloud-push-v2.7.jar" />
 		<lib-file src="src/android/libs/avoscloud-sdk-v2.7.jar" />
@@ -55,5 +44,16 @@
 		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushPlugin.java" target-dir="src/com/mobishift/plugin/" />
 		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushReceiver.java" target-dir="src/com/mobishift/plugin/" />
 	</platform>
+	<platform name="ios">
+		<js-module name="AVOSAndroidPushNotification" src="www/ios/AVOSAndroidPushNotification.js">
+			<clobbers target="AVOSAndroidPushNotification" />
+		</js-module>
+		<config-file parent="/*" target="config.xml">
+			<feature name="AVOSAndroidPushNotification">
+				<param name="ios-package" value="AVOSAndroidPushNotification" />
+			</feature>
+		</config-file>
+		<source-file src="src/ios/AVOSAndroidPushNotification.m" />
 
+	</platform>
 </plugin>
