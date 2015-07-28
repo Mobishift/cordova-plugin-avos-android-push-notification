@@ -1,6 +1,7 @@
 package com.mobishift.plugin;
 
 import android.app.Activity;
+import android.util.Log;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -9,6 +10,9 @@ import com.avos.avoscloud.PushService;
 
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * @author deckmon
  */
@@ -17,9 +21,15 @@ public class AVOSAndroidPushPlugin extends CordovaPlugin {
     public static final String TAG = "AVOSAndroidPushPlugin";
     public static AVOSAndroidPushPlugin plugin;
     public static String ClientType = null;
+    private static String url = null;
 
     private CallbackContext callbackContext;
+    private static CallbackContext openCallbackContext;
 
+    public static void  setUrl(String pathUrl){
+        url = pathUrl;
+        getUrl();
+    }
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
@@ -40,6 +50,10 @@ public class AVOSAndroidPushPlugin extends CordovaPlugin {
             this.callbackContext = callbackContext;
             plugin = this;
             result = true;
+        } else if(action.equals("get_url")){
+            openCallbackContext = callbackContext;
+            getUrl();
+            result = true;
         }
 
         return result;
@@ -56,6 +70,21 @@ public class AVOSAndroidPushPlugin extends CordovaPlugin {
     public void getClientType(){
         if(ClientType == null){
             ClientType = webView.getPreferences().getString("client_type", null);
+        }
+    }
+
+    public static void getUrl(){
+        if(openCallbackContext != null && url != null){
+            JSONObject jsonObject = new JSONObject();
+            try{
+                jsonObject.put("urlPath", url);
+            }catch (JSONException ex) {
+                Log.e(TAG, ex.getMessage());
+            }
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, jsonObject);
+            pluginResult.setKeepCallback(true);
+            url = null;
+            openCallbackContext.sendPluginResult(pluginResult);
         }
     }
 }

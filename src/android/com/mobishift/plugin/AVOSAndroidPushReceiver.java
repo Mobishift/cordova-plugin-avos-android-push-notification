@@ -1,6 +1,5 @@
 package com.mobishift.plugin;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -38,10 +37,16 @@ public class AVOSAndroidPushReceiver extends BroadcastReceiver {
                     return;
                 }
                 final String message = json.getString("alert");
+
                 Class<?> c = null;
                 String packageName = AVOSCloud.applicationContext.getPackageName();
                 c = Class.forName(packageName + ".MainActivity");
                 Intent resultInetnt = new Intent(AVOSCloud.applicationContext, c);
+                if(json.has("url")){
+                    String url = json.getString("url");
+                    resultInetnt.putExtra("notificationUrl", url);
+                }
+
                 PendingIntent pendingIntent = PendingIntent.getActivity(AVOSCloud.applicationContext, 0, resultInetnt, PendingIntent.FLAG_CANCEL_CURRENT);
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(AVOSCloud.applicationContext)
                         .setSmallIcon(AVOSCloud.applicationContext.getApplicationInfo().icon)

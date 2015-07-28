@@ -20,7 +20,8 @@
 
 	<!-- android -->
 	<platform name="android">
-
+		<hook type="before_plugin_install" src="scripts/android_before_install.js" />
+		<hook type="before_plugin_uninstall" src="scripts/android_before_uninstall.js" />
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="AVOSAndroidPushPlugin" >
 				<param name="android-package" value="com.mobishift.plugin.AVOSAndroidPushPlugin"/>

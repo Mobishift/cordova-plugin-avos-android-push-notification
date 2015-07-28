@@ -1,4 +1,6 @@
-var exec = require('cordova/exec');
+var exec = require('cordova/exec'),
+    channel = require('cordova/channel'),
+    cordova = require('cordova');
 
 var AVOSAndroidPushNotification = function() {
 };
@@ -28,8 +30,27 @@ AVOSAndroidPushNotification.prototype.on_notification = function(callback){
     }
     
     exec(callback, function(){}, "AVOSAndroidPushPlugin", 'on_notification', []);
-}
+};
+
+AVOSAndroidPushNotification.prototype.getUrl = function(callback){
+    callback = callback || function(){};
+    if(typeof callback !== 'function'){
+        console.log('AVOSAndroidPushNotification.on_notification failure: callback parameter must be a function');
+    }
+
+    exec(callback, function(){}, "AVOSAndroidPushPlugin", "get_url", []);
+};
+
+var pushNotification = new AVOSAndroidPushNotification();
+
+channel.onCordovaReady.subscribe(function(){
+    pushNotification.getUrl(function(data){
+        if(data){
+            cordova.fireDocumentEvent('appOpenWithURL', data);
+        }
+    });
+});
 
 //-------------------------------------------------------------------
 
-module.exports = new AVOSAndroidPushNotification();
+module.exports = pushNotification;
