@@ -1,28 +1,40 @@
 /********* AVOSAndroidPushNotification.m Cordova Plugin Implementation *******/
 
-#import <Cordova/CDV.h>
-
-@interface AVOSAndroidPushNotification : CDVPlugin {
-  // Member variables go here.
-}
-
-- (void)getUrl:(CDVInvokedUrlCommand*)command;
-@end
+#import "AVOSAndroidPushNotification.h"
 
 @implementation AVOSAndroidPushNotification
 
-- (void)getUrl:(CDVInvokedUrlCommand*)command
-{
-    CDVPluginResult* pluginResult = nil;
-    NSString* echo = [command.arguments objectAtIndex:0];
+static NSString* callbackId = nil;
+static NSString* url = nil;
+static AVOSAndroidPushNotification* notification = nil;
 
-    if (echo != nil && [echo length] > 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
++ (void)onRemoteNotification:(NSDictionary *)userInfo{
+    if([userInfo objectForKey:@"url"] != nil){
+        if([UIApplication sharedApplication].applicationState == UIApplicationStateInactive || [UIApplication sharedApplication].applicationState == UIApplicationStateBackground){
+            url = [userInfo objectForKey:@"url"];
+            [AVOSAndroidPushNotification sendUrl];
+        }
     }
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
+
+
++ (void)sendUrl{
+    if(callbackId != nil && url != nil){
+        NSDictionary* dictionary = [NSDictionary dictionaryWithObject:url forKey:@"urlPath"];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dictionary];
+        url = nil;
+        [pluginResult setKeepCallbackAsBool:YES];
+        [notification.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
+    }
+}
+
+- (void)get_url:(CDVInvokedUrlCommand*)command
+{
+    callbackId = command.callbackId;
+    notification = self;
+    [AVOSAndroidPushNotification sendUrl];
+
+}
+
 
 @end

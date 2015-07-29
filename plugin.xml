@@ -45,16 +45,19 @@
 		<source-file src="src/android/com/mobishift/plugin/AVOSAndroidPushReceiver.java" target-dir="src/com/mobishift/plugin/" />
 	</platform>
 	<platform name="ios">
+		<hook type="before_plugin_install" src="scripts/ios_before_install.js" />
+		<hook type="before_plugin_uninstall" src="scripts/ios_before_uninstall" />
 		<js-module name="AVOSAndroidPushNotification" src="www/ios/AVOSAndroidPushNotification.js">
 			<clobbers target="AVOSAndroidPushNotification" />
 		</js-module>
 		<dependency id="com.phonegap.plugins.PushPlugin" url="https://github.com/phonegap-build/PushPlugin" commit="master">
 		<config-file parent="/*" target="config.xml">
-			<feature name="AVOSAndroidPushNotification">
+			<feature name="AVOSAndroidPushPlugin">
 				<param name="ios-package" value="AVOSAndroidPushNotification" />
 			</feature>
 		</config-file>
-		<source-file src="src/ios/AVOSAndroidPushNotification.m" />
 
+		<header-file src="src/ios/AVOSAndroidPushNotification.h" />
+		<source-file src="src/ios/AVOSAndroidPushNotification.m" />
 	</platform>
 </plugin>
