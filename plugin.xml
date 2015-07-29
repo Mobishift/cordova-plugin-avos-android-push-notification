@@ -50,7 +50,7 @@
 		<js-module name="AVOSAndroidPushNotification" src="www/ios/AVOSAndroidPushNotification.js">
 			<clobbers target="AVOSAndroidPushNotification" />
 		</js-module>
-		<dependency id="com.phonegap.plugins.PushPlugin" url="https://github.com/phonegap-build/PushPlugin" commit="master">
+		<dependency id="com.phonegap.plugins.PushPlugin" url="https://github.com/phonegap-build/PushPlugin" commit="master" />
 		<config-file parent="/*" target="config.xml">
 			<feature name="AVOSAndroidPushPlugin">
 				<param name="ios-package" value="AVOSAndroidPushNotification" />
