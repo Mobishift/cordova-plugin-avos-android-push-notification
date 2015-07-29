@@ -27,7 +27,7 @@ AVOSAndroidPushNotification.prototype.getUrl = function(callback){
 var pushNotification = new AVOSAndroidPushNotification();
 
 channel.onCordovaReady.subscribe(function(){
-    pushNotification.get_url(function(data){
+    pushNotification.getUrl(function(data){
         if(data){
             cordova.fireDocumentEvent('appOpenWithURL', data);
         }
