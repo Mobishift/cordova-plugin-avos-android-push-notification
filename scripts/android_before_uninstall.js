@@ -10,6 +10,7 @@ module.exports = function(context){
     var packageNames = config.android_packageName() || config.packageName();
     var targetFile = path.join(projectRoot, 'platforms', 'android', 'src', packageNames.replace(/\./g, path.sep), 'MainActivity.java');
 
+    var content = fs.readFileSync(targetFile, {encoding: 'utf8'});
     if(content.indexOf('com.mobishift.plugin.AVOSAndroidPushPlugin') >= 0){
     	content = content.replace('import com.mobishift.plugin.AVOSAndroidPushPlugin;\n', '')
     		.replace('if(getIntent().hasExtra("notificationUrl")){AVOSAndroidPushPlugin.setUrl(getIntent().getStringExtra("notificationUrl"));}\n', '')
