@@ -11,7 +11,7 @@ module.exports = function(context){
     var targetFile = path.join(projectRoot, 'platforms', 'android', 'src', packageNames.replace(/\./g, path.sep), 'MainActivity.java');
 
     var content = fs.readFileSync(targetFile, {encoding: 'utf8'});
-    if(content.indexOf('com.mobishift.plugin.AVOSAndroidPushPlugin') !== -1){
+    if(content.indexOf('com.mobishift.plugin.AVOSAndroidPushPlugin') === -1){
     	content = content.replace('import org.apache.cordova.*;', 'import org.apache.cordova.*;\nimport com.mobishift.plugin.AVOSAndroidPushPlugin;\n');
 
     	content = content.replace('super.onCreate(savedInstanceState);', 'super.onCreate(savedInstanceState);\nif(getIntent().hasExtra("notificationUrl")){AVOSAndroidPushPlugin.setUrl(getIntent().getStringExtra("notificationUrl"));}\n');
